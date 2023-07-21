@@ -24,7 +24,7 @@ documents = []
 for dirpath, dirnames, filenames in os.walk('repo'):
     # skip directories in exclude_dir
     dirnames[:] = [d for d in dirnames if d not in exclude_dir]
-    
+
     for file in filenames:
         _, file_extension = os.path.splitext(file)
 
@@ -41,7 +41,11 @@ docs = text_splitter.split_documents(documents)
 for doc in docs:
     source = doc.metadata['source']
     cleaned_source = '/'.join(source.split('/')[1:])
-    doc.page_content = "FILE NAME: " + cleaned_source + "\n###\n" + doc.page_content.replace('\u0000', '')
+    doc.page_content = (
+        f"FILE NAME: {cleaned_source}"
+        + "\n###\n"
+        + doc.page_content.replace('\u0000', '')
+    )
 
 embeddings = OpenAIEmbeddings()
 

@@ -38,14 +38,10 @@ while True:
         break
 
     matched_docs = vector_store.similarity_search(query)
-    code_str = ""
-
-    for doc in matched_docs:
-        code_str += doc.page_content + "\n\n"
-        
+    code_str = "".join(doc.page_content + "\n\n" for doc in matched_docs)
     print("\n\033[35m" + code_str + "\n\033[32m")
 
-    
+
     template="""
     You are Codebase AI. You are a superintelligent AI that answers questions about codebases.
 
